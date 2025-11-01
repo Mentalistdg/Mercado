@@ -1,79 +1,264 @@
-# Mercado - Informe de Mercados
+# 🔐 Mercado - Informe de Mercados Seguro
 
-Informe semanal de mercados financieros publicado de forma segura con protección por contraseña.
+Aplicación web con autenticación real para proteger informes financieros.
 
-## 🔒 Opciones de Despliegue con Privacidad
+## 🎯 Características
 
-### Opción A: Netlify (✅ RECOMENDADA - Password Gratis)
+- ✅ Autenticación segura con usuario y contraseña
+- ✅ Contraseñas hasheadas con bcrypt
+- ✅ Sesiones seguras con express-session
+- ✅ Protección a nivel de servidor (no JavaScript del lado del cliente)
+- ✅ Interfaz de login profesional
+- ✅ Despliegue gratuito en Railway o Render
 
-**Password protection incluida en plan gratuito**
+## 🚀 Despliegue Rápido (Railway - RECOMENDADO)
 
-1. **Crear cuenta en Netlify:**
-   - Ve a https://netlify.com
-   - Registrate gratis con tu cuenta de GitHub
+### Opción A: Railway (100% Gratis, 5 min de configuración)
 
-2. **Importar repositorio:**
-   - Clic en "Add new site" → "Import an existing project"
-   - Selecciona "GitHub"
-   - Autoriza Netlify a acceder a tus repositorios
-   - Selecciona el repositorio "Mercado"
+**Railway ofrece 500 horas gratis al mes - suficiente para mantener tu app corriendo 24/7**
 
-3. **Configurar despliegue:**
-   - Build command: (dejar vacío)
-   - Publish directory: `/` (root)
-   - Clic en "Deploy site"
+#### Paso 1: Crear cuenta en Railway
+```
+🌐 Ve a: https://railway.app
+```
+- Regístrate con tu cuenta de GitHub (gratis)
+- No necesitas tarjeta de crédito
 
-4. **Activar protección por contraseña:**
-   - Ve a: Site settings → General → Site details
-   - Scroll hasta "Password protection"
-   - Clic en "Change password"
-   - Ingresa tu contraseña deseada
-   - Guarda cambios
+#### Paso 2: Crear nuevo proyecto
+1. Clic en **"New Project"**
+2. Selecciona **"Deploy from GitHub repo"**
+3. Autoriza Railway a acceder a tus repositorios
+4. Selecciona el repositorio **"Mercado"**
+5. Railway detectará automáticamente que es una app Node.js
 
-5. **¡Listo!** Tu sitio estará en: `https://tu-sitio.netlify.app`
-   - Cualquier visitante necesitará la contraseña para acceder
-   - Solo tú conoces la contraseña
+#### Paso 3: Configurar Variables de Entorno
+1. En el dashboard del proyecto, ve a la pestaña **"Variables"**
+2. Agrega las siguientes variables:
+
+```bash
+# Usuario de acceso
+AUTH_USERNAME=tu_usuario
+
+# Contraseña (ver instrucciones abajo para generar hash)
+AUTH_PASSWORD_HASH=tu_hash_aqui
+
+# Secreto de sesión (genera uno aleatorio)
+SESSION_SECRET=genera_un_secreto_aleatorio_aqui
+
+# Entorno
+NODE_ENV=production
+```
+
+**📝 Para generar el hash de tu contraseña:**
+
+Opción 1 - Desde tu computadora local:
+```bash
+# 1. Clona el repositorio
+git clone https://github.com/Mentalistdg/Mercado.git
+cd Mercado
+
+# 2. Instala dependencias
+npm install
+
+# 3. Genera tu hash con la contraseña que quieras
+node generate-hash.js TuContraseñaSegura123
+
+# 4. Copia el hash generado y úsalo en AUTH_PASSWORD_HASH
+```
+
+Opción 2 - Online:
+```
+🌐 Ve a: https://bcrypt-generator.com
+- Ingresa tu contraseña deseada
+- Usa 10 rounds
+- Copia el hash generado
+```
+
+**📝 Para generar SESSION_SECRET:**
+```bash
+# Ejecuta en tu terminal:
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+# O usa esta página:
+# https://www.random.org/strings/
+```
+
+#### Paso 4: Desplegar
+1. Railway desplegará automáticamente tu aplicación
+2. Espera 2-3 minutos
+3. Verás un botón **"Generate Domain"** - haz clic para obtener tu URL pública
+4. ¡Listo! Tu app estará en: `https://tu-app.up.railway.app`
 
 ---
 
-### Opción B: Vercel (⚠️ Password solo en plan Pro)
+### Opción B: Render (Alternativa Gratuita)
 
-**Nota:** Vercel requiere plan Pro ($20/mes) para password protection nativo.
+**Render ofrece 750 horas gratis al mes**
 
-1. **Crear cuenta en Vercel:**
-   - Ve a https://vercel.com
-   - Registrate gratis con tu cuenta de GitHub
+#### Paso 1: Crear cuenta
+```
+🌐 Ve a: https://render.com
+```
+- Regístrate con GitHub (gratis)
 
-2. **Importar repositorio:**
-   - Clic en "Add New" → "Project"
-   - Selecciona el repositorio "Mercado"
-   - Clic en "Import"
+#### Paso 2: Crear Web Service
+1. Clic en **"New +"** → **"Web Service"**
+2. Conecta tu repositorio GitHub **"Mercado"**
+3. Configuración:
+   - **Name:** mercado-secure
+   - **Environment:** Node
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+   - **Plan:** Free
 
-3. **Configurar despliegue:**
-   - Framework Preset: Other
-   - Root Directory: ./
-   - Clic en "Deploy"
+#### Paso 3: Variables de Entorno
+En la sección **"Environment"**, agrega las mismas variables que en Railway:
+- `AUTH_USERNAME`
+- `AUTH_PASSWORD_HASH`
+- `SESSION_SECRET`
+- `NODE_ENV=production`
 
-4. **Protección (solo plan Pro):**
-   - Settings → Deployment Protection
-   - Enable "Password Protection"
-
-**Alternativa gratuita para Vercel:** Puedes usar sin password o implementar autenticación personalizada (más complejo).
+#### Paso 4: Deploy
+1. Clic en **"Create Web Service"**
+2. Espera 3-5 minutos
+3. Tu app estará en: `https://mercado-secure.onrender.com`
 
 ---
 
-## 📋 Archivos del Proyecto
+## 💻 Desarrollo Local
 
-- `index.html` - Página principal del informe
-- `netlify.toml` - Configuración de Netlify
-- `vercel.json` - Configuración de Vercel
+### Requisitos
+- Node.js 18+ instalado
+- Git
 
-## 🔐 Seguridad
+### Instalación
 
-- Password protection a nivel de servidor (Netlify)
-- Headers de seguridad configurados
-- Protección contra XSS y clickjacking
+```bash
+# 1. Clonar repositorio
+git clone https://github.com/Mentalistdg/Mercado.git
+cd Mercado
 
-## 💡 Recomendación
+# 2. Instalar dependencias
+npm install
 
-**Usa Netlify** si quieres password protection gratis y real. Es la opción más simple y efectiva para tu caso de uso.
+# 3. Generar contraseña hasheada
+node generate-hash.js TuContraseña123
+
+# 4. Crear archivo .env
+cp .env.example .env
+
+# 5. Editar .env con tus credenciales
+# AUTH_USERNAME=tu_usuario
+# AUTH_PASSWORD_HASH=el_hash_generado
+# SESSION_SECRET=un_secreto_aleatorio
+
+# 6. Iniciar servidor
+npm start
+
+# 7. Abrir en navegador
+# http://localhost:3000
+```
+
+### Credenciales por Defecto (solo para desarrollo)
+- **Usuario:** admin
+- **Contraseña:** admin123
+
+⚠️ **IMPORTANTE:** Cambia estas credenciales antes de desplegar a producción.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+Mercado/
+├── server.js              # Servidor Express con autenticación
+├── package.json           # Dependencias
+├── .env.example          # Plantilla de variables de entorno
+├── generate-hash.js      # Script para generar hash de contraseñas
+├── views/
+│   └── login.html        # Página de inicio de sesión
+├── public/
+│   └── informe.html      # Informe de mercados protegido
+└── README.md             # Este archivo
+```
+
+---
+
+## 🔒 Seguridad
+
+### Características de Seguridad Implementadas:
+- ✅ Contraseñas hasheadas con bcrypt (no se guardan en texto plano)
+- ✅ Sesiones seguras con httpOnly cookies
+- ✅ Protección CSRF básica
+- ✅ Variables de entorno para credenciales
+- ✅ Timeout de sesión (24 horas)
+- ✅ Cookies seguras en HTTPS (producción)
+
+### Recomendaciones Adicionales:
+- 🔐 Usa contraseñas fuertes (mínimo 12 caracteres, mezcla de letras, números y símbolos)
+- 🔄 Cambia las credenciales regularmente
+- 🚫 Nunca compartas tu archivo `.env`
+- 🌐 Usa HTTPS en producción (Railway y Render lo proveen automáticamente)
+
+---
+
+## 🆘 Solución de Problemas
+
+### Error: "Cannot find module 'express'"
+```bash
+npm install
+```
+
+### Error: "Port already in use"
+```bash
+# Cambiar puerto en .env
+PORT=3001
+```
+
+### Olvidé mi contraseña
+1. Genera un nuevo hash con `node generate-hash.js NuevaContraseña`
+2. Actualiza `AUTH_PASSWORD_HASH` en las variables de entorno de Railway/Render
+3. Railway/Render redesplegará automáticamente
+
+### La sesión no persiste
+- Verifica que `SESSION_SECRET` esté configurado
+- Verifica que las cookies no estén bloqueadas en tu navegador
+
+---
+
+## 📊 Costos
+
+| Servicio | Plan Gratuito | Límites | Recomendación |
+|----------|---------------|---------|---------------|
+| **Railway** | ✅ Sí | 500 hrs/mes | ⭐⭐⭐⭐⭐ Mejor opción |
+| **Render** | ✅ Sí | 750 hrs/mes | ⭐⭐⭐⭐ Buena alternativa |
+| **Vercel** | ✅ Sí | Sin password gratis | ⭐⭐ Solo sin autenticación |
+| **Netlify** | ✅ Sí | Solo sitios estáticos | ⭐⭐ No soporta Node.js |
+
+**Recomendación:** Usa **Railway** por su simplicidad y generosidad con el plan gratuito.
+
+---
+
+## 📝 Notas
+
+- El plan gratuito de Railway dura indefinidamente (mientras uses menos de $5/mes en recursos)
+- La aplicación se "duerme" después de 15 minutos de inactividad, y se despierta en 30 segundos al recibir una petición
+- Para mantenerla siempre despierta, puedes usar servicios como [UptimeRobot](https://uptimerobot.com) (gratis)
+
+---
+
+## 📄 Licencia
+
+MIT
+
+---
+
+## 👤 Autor
+
+Strategic Investment Research
+
+---
+
+## 🌟 ¿Necesitas Ayuda?
+
+Si tienes problemas con el despliegue, crea un issue en GitHub o contacta al administrador.
