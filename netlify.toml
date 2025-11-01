@@ -1,0 +1,13 @@
+# Configuración de Netlify para protección con contraseña
+# Netlify permite password protection GRATIS en su plan básico
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer"
+
+# La protección con contraseña se configura desde el dashboard de Netlify
+# Settings > Site details > Password protection
